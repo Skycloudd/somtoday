@@ -54,7 +54,7 @@ async def output_student_info(session: aiohttp.ClientSession, auth):
 async def output_schedule(
     session: aiohttp.ClientSession,
     auth,
-    days: int = 0,
+    days: int,
 ):
     start_date = datetime.datetime.now() + datetime.timedelta(days=days)
     end_date = datetime.datetime.now() + datetime.timedelta(days=days + 1)
@@ -120,10 +120,12 @@ async def main():
         "Content-Type": "application/x-www-form-urlencoded",
     }
 
+    days = 0
+
     async with aiohttp.ClientSession(headers=default_headers) as session:
         auth = await authenticate(session, config)
         await output_student_info(session, auth)
-        await output_schedule(session, auth)
+        await output_schedule(session, auth, days)
 
 
 loop = asyncio.get_event_loop()
