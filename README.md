@@ -18,5 +18,10 @@ A tool to get your somtoday schedule
 ## Usage
 
 ```sh
-chmod +x main.py
+# to run the program
+python3 somtoday.py
+
+# or
+chmod +x somtoday.py
+./somtoday.py
 ```
