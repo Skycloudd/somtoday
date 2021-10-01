@@ -4,6 +4,10 @@ A tool to get your somtoday schedule
 
 ## Install
 
+```sh
+pip install -r requirements.txt
+```
+
 `config.json`
 
 ```json
