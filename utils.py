@@ -1,4 +1,7 @@
-def pretty_datetime(dt):
+from datetime import datetime, timedelta
+
+
+def pretty_datetime(dt: datetime):
     year = dt.year
     month = dt.month
     day = dt.day
@@ -8,7 +11,7 @@ def pretty_datetime(dt):
     return f"{day}/{month}/{year} at {hour}:{minute}"
 
 
-def pretty_timedelta(td):
+def pretty_timedelta(td: timedelta):
     minutes = (td.seconds % 3600) // 60
     hours = td.seconds // 3600
 

@@ -34,11 +34,7 @@ async def authenticate(session: aiohttp.ClientSession, config):
 async def output_student_info(session: aiohttp.ClientSession, auth):
     endpoint = auth["somtoday_api_url"]
 
-    headers = {
-        "Authorization": "Bearer " + auth["access_token"],
-        "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-    }
+    headers = {"Authorization": "Bearer " + auth["access_token"]}
 
     async with session.get(f"{endpoint}/rest/v1/leerlingen", headers=headers) as res:
         data = json.loads(await res.text())
@@ -65,11 +61,7 @@ async def output_schedule(
 
     endpoint = auth["somtoday_api_url"]
 
-    headers = {
-        "Authorization": "Bearer " + auth["access_token"],
-        "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-    }
+    headers = {"Authorization": "Bearer " + auth["access_token"]}
 
     params = {
         "sort": "asc-id",
@@ -115,18 +107,23 @@ async def output_schedule(
         p_start = pretty_datetime(start)
         p_dur = pretty_timedelta(end - start)
 
-        print(f"Title: {title}")
-        print(f"Start: {p_start}, for {p_dur}")
+        print(title)
+        print(f"\tStart: {p_start}, for {p_dur}")
 
 
 async def main():
     with open("config.json", "r") as f:
         config = json.load(f)
 
-    async with aiohttp.ClientSession() as session:
+    default_headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
+
+    async with aiohttp.ClientSession(headers=default_headers) as session:
         auth = await authenticate(session, config)
         await output_student_info(session, auth)
-        await output_schedule(session, auth, 0)
+        await output_schedule(session, auth)
 
 
 loop = asyncio.get_event_loop()
