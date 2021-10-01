@@ -3,11 +3,32 @@
 import asyncio
 import datetime
 import json
+from datetime import datetime, timedelta
 
 import aiohttp
 from dateutil import parser
 
-from utils import pretty_datetime, pretty_timedelta
+
+def pretty_datetime(dt: datetime):
+    year = dt.year
+    month = dt.month
+    day = dt.day
+    hour = dt.hour
+    minute = dt.minute
+
+    return f"{day}/{month}/{year} at {hour}:{minute}"
+
+
+def pretty_timedelta(td: timedelta):
+    minutes = (td.seconds % 3600) // 60
+    hours = td.seconds // 3600
+
+    if hours > 0:
+        output = f"{hours}h {minutes}m"
+    else:
+        output = f"{minutes}m"
+
+    return output
 
 
 async def authenticate(session: aiohttp.ClientSession, config):
@@ -56,8 +77,8 @@ async def output_schedule(
     auth,
     days: int,
 ):
-    start_date = datetime.datetime.now() + datetime.timedelta(days=days)
-    end_date = datetime.datetime.now() + datetime.timedelta(days=days + 1)
+    start_date = datetime.now() + timedelta(days=days)
+    end_date = datetime.now() + timedelta(days=days + 1)
 
     endpoint = auth["somtoday_api_url"]
 
