@@ -141,7 +141,21 @@ async def main():
         "Content-Type": "application/x-www-form-urlencoded",
     }
 
-    days = 0
+    """
+    i should add documentation for this,
+    or even a cli interface
+
+    but here are your docs for now:
+    days = 0 | today
+    days = 1 | tomorrow
+    days = 2 | day after tomorrow
+    etc...
+    negative numbers work aswell!
+    days = -1 | yesterday
+    etc...
+    """
+
+    days = -1
 
     async with aiohttp.ClientSession(headers=default_headers) as session:
         auth = await authenticate(session, config)
