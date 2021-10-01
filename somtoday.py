@@ -100,8 +100,6 @@ async def output_schedule(
 
     all_items = []
 
-    count = 0
-
     while True:
         params["Range"] = f"items={lower}-{upper}"
 
